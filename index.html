@@ -5,122 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Booster | متجر خدمات السوشيال ميديا</title>
     <style>
-        :root { --primary: #2563eb; --accent: #f59e0b; --bg: #f8fafc; --text: #1e293b; }
+        :root { --primary: #2563eb; --accent: #25d366; --bg: #f8fafc; --text: #1e293b; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
-        header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 3rem 1rem; text-align: center; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+        header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 3rem 1rem; text-align: center; clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%); }
         .container { max-width: 1100px; margin: -50px auto 50px; padding: 0 15px; }
         
-        .section-title { margin: 40px 0 20px; border-right: 5px solid var(--accent); padding-right: 15px; font-size: 1.5rem; color: #1e3a8a; }
+        .section-title { margin: 40px 0 20px; border-right: 5px solid #f59e0b; padding-right: 15px; font-size: 1.5rem; color: #1e3a8a; }
         
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .service-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.3s; border: 1px solid #e2e8f0; position: relative; overflow: hidden; }
-        .service-card:hover { transform: translateY(-5px); }
-        .service-card h3 { margin-top: 0; font-size: 1.1rem; color: var(--primary); }
-        .price { font-size: 1.3rem; font-weight: bold; color: #059669; display: block; margin: 10px 0; }
-        .badge { background: #dcfce7; color: #166534; font-size: 0.8rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
-        .free-badge { background: #fef3c7; color: #92400e; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .service-card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .service-card h3 { margin: 0; font-size: 1rem; color: var(--primary); min-height: 40px; }
+        .price { font-size: 1.2rem; font-weight: bold; color: #059669; display: block; margin: 8px 0; }
+        .badge { background: #dcfce7; color: #166534; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: bold; }
+        .free { background: #fef3c7; color: #92400e; }
 
-        .order-section { background: white; padding: 40px; border-radius: 20px; margin-top: 60px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .order-section h2 { color: var(--primary); text-align: center; }
+        .order-section { background: white; padding: 30px; border-radius: 20px; margin-top: 50px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border: 2px solid var(--accent); }
+        .order-section h2 { color: #128c7e; text-align: center; margin-top: 0; }
         
-        form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
         .full-width { grid-column: span 2; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
-        button { background: var(--accent); color: white; padding: 15px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; grid-column: span 2; }
-        button:hover { background: #d97706; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+        
+        .btn-whatsapp { background: var(--accent); color: white; padding: 15px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; grid-column: span 2; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-whatsapp:hover { background: #128c7e; transform: scale(1.02); }
 
-        @media (max-width: 768px) { form { grid-template-columns: 1fr; } .full-width, button { grid-column: span 1; } }
+        @media (max-width: 768px) { form { grid-template-columns: 1fr; } .full-width, .btn-whatsapp { grid-column: span 1; } }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Social Booster</h1>
-    <p>أسرع وأرخص خدمات السوشيال ميديا في الوطن العربي</p>
+    <p>أسرع وأرخص خدمات السوشيال ميديا - تنفيذ فوري</p>
 </header>
 
 <div class="container">
     
-    <h2 class="section-title">🔥 الخدمات الأكثر طلباً</h2>
+    <h2 class="section-title">⭐ خدمات المتابعين والاشتراكات</h2>
     <div class="services-grid">
         <div class="service-card">
-            <span class="badge">الأكثر مبيعاً</span>
-            <h3>متابعين تيك توك (ضمان)</h3>
-            <p>10 متابعين حقيقيين</p>
+            <span class="badge">تيك توك</span>
+            <h3>10 متابعين ممتازة + ضمان</h3>
             <span class="price">1.41 ج.م</span>
         </div>
         <div class="service-card">
-            <span class="badge">سريع جداً</span>
-            <h3>متابعين إنستجرام (الأسرع)</h3>
-            <p>50 متابع + ضمان</p>
+            <span class="badge">إنستجرام</span>
+            <h3>50 متابع (الأسرع + ضمان)</h3>
             <span class="price">3.76 ج.م</span>
         </div>
         <div class="service-card">
-            <span class="badge">جودة عالية</span>
-            <h3>متابعين إنستجرام حقيقي</h3>
-            <p>10 متابعين مميزين</p>
+            <span class="badge">إنستجرام</span>
+            <h3>10 متابعين (حقيقي + ضمان)</h3>
             <span class="price">3.29 ج.م</span>
+        </div>
+        <div class="service-card">
+            <span class="badge">تيليجرام</span>
+            <h3>10 مشتركين (قنوات وجروبات)</h3>
+            <span class="price">0.47 ج.م</span>
         </div>
     </div>
 
-    <h2 class="section-title">🎁 خدمات مجانية وتجارب</h2>
+    <h2 class="section-title">💬 التفاعل والتعليقات</h2>
     <div class="services-grid">
         <div class="service-card">
-            <span class="badge free-badge">مجاني</span>
-            <h3>مشاهدات تيك توك</h3>
-            <p>100 مشاهدة للفيديو</p>
+            <span class="badge">إنستجرام</span>
+            <h3>10 تعليقات مخصصة</h3>
+            <span class="price">0.47 ج.م</span>
+        </div>
+        <div class="service-card">
+            <span class="badge">تيليجرام</span>
+            <h3>1 تفاعل إيجابي للمنشور</h3>
+            <span class="price">يبدأ من 0</span>
+        </div>
+    </div>
+
+    <h2 class="section-title">🎁 خدمات مجانية (0 جنيه)</h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <span class="badge free">مجاني</span>
+            <h3>100 مشاهدة تيك توك</h3>
             <span class="price">0.00 ج.م</span>
         </div>
         <div class="service-card">
-            <span class="badge free-badge">مجاني</span>
-            <h3>لايكات إنستجرام/فيسبوك</h3>
-            <p>10 لايكات للتجربة</p>
+            <span class="badge free">مجاني</span>
+            <h3>10 لايكات (تيك توك/إنستا/فيسبوك)</h3>
             <span class="price">0.00 ج.م</span>
         </div>
         <div class="service-card">
-            <span class="badge free-badge">مجاني</span>
-            <h3>مشاهدات تيليجرام</h3>
-            <p>10 مشاهدات للمنشور</p>
+            <span class="badge free">مجاني</span>
+            <h3>100 مشاهدة (إنستجرام/تويتر)</h3>
+            <span class="price">0.00 ج.م</span>
+        </div>
+        <div class="service-card">
+            <span class="badge free">مجاني</span>
+            <h3>50 مشاركة بث مباشر تيك توك</h3>
             <span class="price">0.00 ج.م</span>
         </div>
     </div>
 
     <div class="order-section" id="order">
-        <h2>نموذج طلب الخدمة</h2>
-        <p style="text-align: center;">أدخل بياناتك وسنتواصل معك فوراً للتنفيذ</p>
+        <h2>اطلب خدمتك الآن</h2>
+        <p style="text-align: center; font-size: 0.9rem;">سيتم تحويلك للدردشة المباشرة لتأكيد الطلب والدفع</p>
         
-        <form action="https://formspree.io/f/YOUR_ID" method="POST">
+        <form onsubmit="sendOrder(event)">
             <div>
-                <label>الاسم بالكامل:</label>
-                <input type="text" name="customer_name" required placeholder="أحمد محمد">
+                <label>الاسم:</label>
+                <input type="text" id="cust_name" required placeholder="مثال: محمد علي">
             </div>
             <div>
-                <label>رقم الواتساب:</label>
-                <input type="tel" name="whatsapp" required placeholder="01xxxxxxxxx">
+                <label>رابط الحساب/المنشور:</label>
+                <input type="url" id="cust_link" required placeholder="ضع الرابط هنا">
             </div>
             <div class="full-width">
-                <label>اختر الخدمة المطلوبة:</label>
-                <select name="service_type" required>
-                    <option value="">-- اختر من هنا --</option>
-                    <option value="tiktok_followers">متابعين تيك توك (1.41 ج.م)</option>
-                    <option value="insta_fast">متابعين إنستجرام سريع (3.76 ج.م)</option>
-                    <option value="insta_real">متابعين إنستجرام حقيقي (3.29 ج.م)</option>
-                    <option value="telegram_sub">مشتركين تيليجرام (0.47 ج.م)</option>
-                    <option value="free_views">تجربة مشاهدات مجانية</option>
+                <label>اختر الخدمة:</label>
+                <select id="cust_service" required>
+                    <option value="">-- اختر الخدمة من هنا --</option>
+                    <optgroup label="مدفوع">
+                        <option value="تيك توك 10 متابعين">10 متابعين تيك توك (1.41 ج.م)</option>
+                        <option value="إنستا 50 متابع سريع">50 متابع إنستا سريع (3.76 ج.م)</option>
+                        <option value="إنستا 10 حقيقي">10 متابعين إنستا حقيقي (3.29 ج.م)</option>
+                        <option value="تيليجرام 10 مشتركين">10 مشتركين تيليجرام (0.47 ج.م)</option>
+                        <option value="إنستا 10 تعليقات">10 تعليقات إنستا (0.47 ج.م)</option>
+                    </optgroup>
+                    <optgroup label="مجاني">
+                        <option value="مشاهدات تيك توك مجاني">100 مشاهدة تيك توك (مجاناً)</option>
+                        <option value="لايكات مجانية">10 لايكات تجربة (مجاناً)</option>
+                        <option value="مشاهدات منوعة مجاني">100 مشاهدة إنستا/تويتر (مجاناً)</option>
+                    </optgroup>
                 </select>
             </div>
-            <div class="full-width">
-                <label>رابط الحساب أو المنشور:</label>
-                <input type="url" name="link" required placeholder="https://instagram.com/user">
-            </div>
-            <button type="submit">إرسال الطلب الآن</button>
+            <button type="submit" class="btn-whatsapp">
+                إرسال الطلب عبر واتساب
+            </button>
         </form>
     </div>
 </div>
 
-<footer style="text-align: center; padding: 20px; color: #666;">
-    &copy; 2026 Social Booster - جميع الحقوق محفوظة
+<script>
+function sendOrder(event) {
+    event.preventDefault();
+    
+    // --- ضع رقمك هنا مفتاح الدولة (مثال لمصر 20) ---
+    const myNumber = "201010876605"; 
+    
+    const name = document.getElementById('cust_name').value;
+    const link = document.getElementById('cust_link').value;
+    const service = document.getElementById('cust_service').value;
+
+    const message = `طلب جديد من الموقع 🚀%0A%0A` +
+                    `👤 العميل: ${name}%0A` +
+                    `🛠 الخدمة: ${service}%0A` +
+                    `🔗 الرابط: ${link}%0A%0A` +
+                    `متاح الآن للتنفيذ؟`;
+
+    const whatsappUrl = `https://wa.me/${myNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+}
+</script>
+
+<footer style="text-align: center; padding: 30px; color: #666; font-size: 0.8rem;">
+    &copy; 2026 Social Booster - جميع الأسعار بالجنيه المصري
 </footer>
 
 </body>
