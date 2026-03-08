@@ -3,223 +3,502 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Social Booster | المتجر الاحترافي</title>
+    <title>متجر المتابعين | Social Booster</title>
     <style>
-        :root { --primary: #2563eb; --accent: #25d366; --bg: #f1f5f9; --dark: #1e293b; }
+        /* تعريف الألوان المستوحاة من التصميم المرفق */
+        :root {
+            --primary-orange: #ff9800; /* اللون البرتقالي للأزرار والأسعار */
+            --dark-orange: #e68900;
+            --bg-light: #f9f9f9;
+            --text-dark: #333;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; color: var(--dark); }
         
-        header { background: linear-gradient(45deg, #1e3a8a, #2563eb); color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 30px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        header h1 { margin: 0; font-size: 2rem; }
-        
-        .container { max-width: 1100px; margin: auto; padding: 20px; }
-        .section-title { margin: 30px 0 15px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; color: #1e3a8a; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: #cbd5e1; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding-bottom: 120px; /* مساحة للسلة العائمة في الأسفل */
+            direction: rtl;
+        }
 
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #e2e8f0; }
-        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        .card h3 { margin: 0 0 10px; font-size: 1.1rem; color: var(--primary); }
-        
-        .price-info { font-size: 0.85rem; color: #64748b; margin-bottom: 15px; }
-        .calc-area { background: #f8fafc; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
-        .calc-area label { display: block; font-size: 0.8rem; margin-bottom: 5px; font-weight: bold; }
-        .calc-area input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; outline: none; }
+        /* الهيدر */
+        header {
+            background-color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary-orange);
+            font-weight: bold;
+        }
+        header p { margin: 5px 0 0; font-size: 0.9rem; color: #666; }
 
-        .price-row { display: flex; justify-content: space-between; align-items: center; font-weight: bold; margin-bottom: 15px; }
-        .total-price { color: #059669; font-size: 1.3rem; }
+        .container { max-width: 1000px; margin: auto; padding: 15px; }
 
-        .add-btn { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .add-btn:active { transform: scale(0.95); }
+        /* عناوين الأقسام */
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin: 25px 0 15px;
+            padding-right: 10px;
+            border-right: 4px solid var(--primary-orange);
+            font-weight: bold;
+        }
 
-        /* سلة الطلبات الاحترافية */
-        .cart-sticky { position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -5px 25px rgba(0,0,0,0.2); border-radius: 20px 20px 0 0; z-index: 2000; transform: translateY(100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .cart-sticky.active { transform: translateY(0); }
-        
-        .cart-content { max-width: 600px; margin: auto; padding: 20px; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .cart-items-list { max-height: 150px; overflow-y: auto; margin-bottom: 15px; }
-        .cart-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 0.9rem; }
-        
-        .order-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .order-fields input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.9rem; }
-        
-        .btn-confirm { background: var(--accent); color: white; border: none; padding: 15px; width: 100%; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
+        /* شبكة الخدمات - Responsive */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
 
-        .close-cart { background: #fee2e2; color: #ef4444; border: none; padding: 5px 15px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; }
+        /* تصميم بطاقة الخدمة (شبه الصور المرفقة) */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.4;
+            min-height: 50px; /* لتوحيد ارتفاع العناوين */
+        }
+
+        /* منطقة الحاسبة الذكية داخل البطاقة */
+        .calc-box {
+            background-color: #fffaf0; /* خلفية برتقالية فاتحة جداً */
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ffe0b2;
+            margin-bottom: 15px;
+        }
+        .calc-box label {
+            display: block;
+            font-size: 0.85rem;
+            color: #795548;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .calc-box input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-orange);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .calc-box input[type="number"]:focus {
+            border-color: var(--primary-orange);
+        }
+
+        /* عرض السعر */
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding: 0 5px;
+        }
+        .price-label { font-size: 0.9rem; color: #666; }
+        .total-price {
+            color: var(--primary-orange);
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        /* زر الإضافة للسلة */
+        .add-btn {
+            background-color: white;
+            color: var(--primary-orange);
+            border: 2px solid var(--primary-orange);
+            padding: 12px;
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: auto; /* يدفع الزر للأسفل */
+            transition: all 0.2s;
+        }
+        .add-btn:hover {
+            background-color: var(--primary-orange);
+            color: white;
+        }
+        .add-btn:active { transform: scale(0.98); }
+
+        /* ------------------------------------------- */
+        /* تصميم سلة الطلبات العائمة (الاحترافية) */
+        /* ------------------------------------------- */
+        .cart-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.15);
+            border-radius: 20px 20px 0 0;
+            z-index: 2000;
+            transform: translateY(100%); /* مخفية في البداية */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cart-panel.active {
+            transform: translateY(0); /* تظهر عند إضافة عنصر */
+        }
+        
+        .cart-content {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .cart-title { font-weight: bold; font-size: 1.1rem; color: var(--text-dark); }
+        
+        /* قائمة العناصر في السلة */
+        .cart-items-list {
+            max-height: 120px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 0.9rem;
+        }
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        /* الإجمالي النهائي في السلة */
+        .final-price-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-orange);
+            background: #fff8f0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        /* خانات بيانات العميل */
+        .order-fields {
+            display: grid;
+            grid-template-columns: 1fr; /* خانة الاسم فوق خانة الرابط على الموبايل */
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        @media (min-width: 480px) {
+            .order-fields { grid-template-columns: 1fr 1fr; } /* جوار بعض على الشاشات الأكبر */
+        }
+        .order-fields input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .order-fields input:focus { border-color: var(--primary-orange); }
+        
+        /* زر الإرسال للواتساب (نفس لون الصورة) */
+        .btn-send {
+            background-color: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            transition: background 0.2s, transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-send:hover { background-color: var(--dark-orange); }
+        .btn-send:active { transform: scale(0.98); }
+
+        /* علامة مائية بسيطة للفوتير */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+            font-size: 0.8rem;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Social Booster</h1>
-    <p>بوابتك الأسرع للانتشار على منصات التواصل الاجتماعي</p>
+    <h1>متجر المتابعين</h1>
+    <p>اختر خدماتك.. حدد الكمية.. واترك الباقي علينا</p>
 </header>
 
 <div class="container">
     
     <div class="section-title">🎵 خدمات تيك توك</div>
     <div class="services-grid">
+        
         <div class="card">
-            <h3>متابعين تيك توك (ضمان)</h3>
-            <div class="price-info">التكلفة: 0.15 ج.م للمتابع الواحد</div>
-            <div class="calc-area">
-                <label>أدخل العدد المطلوبه:</label>
-                <input type="number" id="qty_tk_fol" value="100" min="10" oninput="calculate('tk_fol', 0.30)">
+            <h3>متابعين تيك توك (جودة ممتازة + ضمان)</h3>
+            <div class="price-info" style="font-size:0.8rem; color:#888; margin-bottom:10px;">السعر الأساسي: 3.00 ج.م لكل 10 متابعين</div>
+            <div class="calc-box">
+                <label>أدخل العدد المطلوبه (بالمضاعفات):</label>
+                <input type="number" id="qty_tk_fol" value="100" min="10" step="10" oninput="calculate('tk_fol', 0.30)">
             </div>
-            <div class="price-row"><span>السعر:</span><span class="total-price" id="prc_tk_fol">30.00 ج.م</span></div>
-            <button class="add-btn" onclick="addToCart('متابعين تيك توك', 'qty_tk_fol', 0.30)">إضافة للطلب</button>
+            <div class="price-row">
+                <span class="price-label">السعر المقدر:</span>
+                <span class="total-price" id="prc_tk_fol">30.00 ج.م</span>
+            </div>
+            <button class="add-btn" onclick="addToCart('متابعين تيك توك ضمان', 'qty_tk_fol', 0.30)">+ إضافة للطلب</button>
         </div>
+
         <div class="card">
-            <h3>مشاهدات تيك توك</h3>
-            <div class="price-info">100 مشاهدة مجاناً / الزيادة بسعر رمزي</div>
-            <div class="calc-area">
-                <label>أدخل عدد المشاهدات:</label>
-                <input type="number" id="qty_tk_vw" value="1000" min="100" oninput="calculate('tk_vw', 0.005)">
+            <h3>لايكات تيك توك (سريعة حقيقية)</h3>
+            <div class="price-info" style="font-size:0.8rem; color:#888; margin-bottom:10px;">السعر الأساسي: 1.50 ج.م لكل 10 لايكات</div>
+            <div class="calc-box">
+                <label>أدخل عدد اللايكات:</label>
+                <input type="number" id="qty_tk_lik" value="100" min="10" step="10" oninput="calculate('tk_lik', 0.15)">
             </div>
-            <div class="price-row"><span>السعر:</span><span class="total-price" id="prc_tk_vw">5.00 ج.م</span></div>
-            <button class="add-btn" onclick="addToCart('مشاهدات تيك توك', 'qty_tk_vw', 0.005)">إضافة للطلب</button>
+            <div class="price-row">
+                <span class="price-label">السعر المقدر:</span>
+                <span class="total-price" id="prc_tk_lik">15.00 ج.م</span>
+            </div>
+            <button class="add-btn" onclick="addToCart('لايكات تيك توك سريعة', 'qty_tk_lik', 0.15)">+ إضافة للطلب</button>
         </div>
+        
     </div>
 
     <div class="section-title">📸 خدمات إنستجرام</div>
     <div class="services-grid">
+        
         <div class="card">
-            <h3>متابعين إنستا (الأسرع + ضمان)</h3>
-            <div class="price-info">سعر المتابع: 0.18 ج.م</div>
-            <div class="calc-area">
-                <label>أدخل العدد:</label>
-                <input type="number" id="qty_ig_fol" value="100" min="50" oninput="calculate('ig_fol', 0.18)">
+            <h3>متابعين إنستجرام (الأسرع في التنفيذ)</h3>
+            <div class="price-info" style="font-size:0.8rem; color:#888; margin-bottom:10px;">السعر الأساسي: 7.50 ج.م لكل 50 متابع</div>
+            <div class="calc-box">
+                <label>أدخل العدد المطلوبه:</label>
+                <input type="number" id="qty_ig_fol" value="100" min="50" step="50" oninput="calculate('ig_fol', 0.15)">
             </div>
-            <div class="price-row"><span>السعر:</span><span class="total-price" id="prc_ig_fol">18.00 ج.م</span></div>
-            <button class="add-btn" onclick="addToCart('متابعين إنستا سريع', 'qty_ig_fol', 0.18)">إضافة للطلب</button>
-        </div>
-        <div class="card">
-            <h3>تعليقات إنستا مخصصة</h3>
-            <div class="price-info">سعر التعليق: 1.50 ج.م</div>
-            <div class="calc-area">
-                <label>عدد التعليقات:</label>
-                <input type="number" id="qty_ig_com" value="10" min="5" oninput="calculate('ig_com', 1.50)">
+            <div class="price-row">
+                <span class="price-label">السعر المقدر:</span>
+                <span class="total-price" id="prc_ig_fol">15.00 ج.م</span>
             </div>
-            <div class="price-row"><span>السعر:</span><span class="total-price" id="prc_ig_com">15.00 ج.م</span></div>
-            <button class="add-btn" onclick="addToCart('تعليقات إنستا', 'qty_ig_com', 1.50)">إضافة للطلب</button>
+            <button class="add-btn" onclick="addToCart('متابعين إنستا سريع', 'qty_ig_fol', 0.15)">+ إضافة للطلب</button>
         </div>
-    </div>
 
-    <div class="section-title">✈️ خدمات تيليجرام</div>
-    <div class="services-grid">
         <div class="card">
-            <h3>مشتركين قنوات/جروبات</h3>
-            <div class="price-info">سعر المشترك: 0.10 ج.م</div>
-            <div class="calc-area">
-                <label>عدد المشتركين:</label>
-                <input type="number" id="qty_tg_sub" value="100" min="10" oninput="calculate('tg_sub', 0.10)">
+            <h3>تعليقات إنستجرام (مخصصة من حسابات حقيقية)</h3>
+            <div class="price-info" style="font-size:0.8rem; color:#888; margin-bottom:10px;">السعر الأساسي: 1.50 ج.م لكل تعليق</div>
+            <div class="calc-box">
+                <label>أدخل عدد التعليقات:</label>
+                <input type="number" id="qty_ig_com" value="10" min="5" step="1" oninput="calculate('ig_com', 1.50)">
             </div>
-            <div class="price-row"><span>السعر:</span><span class="total-price" id="prc_tg_sub">10.00 ج.م</span></div>
-            <button class="add-btn" onclick="addToCart('مشتركين تيليجرام', 'qty_tg_sub', 0.10)">إضافة للطلب</button>
+            <div class="price-row">
+                <span class="price-label">السعر المقدر:</span>
+                <span class="total-price" id="prc_ig_com">15.00 ج.م</span>
+            </div>
+            <button class="add-btn" onclick="addToCart('تعليقات إنستا مخصصة', 'qty_ig_com', 1.50)">+ إضافة للطلب</button>
         </div>
-    </div>
-
-    <div class="section-title">🎁 هدايا وتجارب (0 ج.م)</div>
-    <div class="services-grid">
-        <div class="card" style="border: 2px dashed var(--accent);">
-            <h3>لايكات (تيك توك/إنستا/فيسبوك)</h3>
-            <p>10 لايكات مجانية لتجربة الخدمة</p>
-            <button class="add-btn" style="background: var(--accent);" onclick="addFree('10 لايكات مجانية')">احصل عليها مجاناً</button>
-        </div>
+        
     </div>
 
 </div>
 
-<div class="cart-sticky" id="cartPanel">
+<footer>
+    &copy; 2026 Social Booster - جميع الحقوق محفوظة
+</footer>
+
+<div class="cart-panel" id="cartPanel">
     <div class="cart-content">
         <div class="cart-header">
-            <strong>قائمة طلباتك 🛒</strong>
-            <button class="close-cart" onclick="toggleCart(false)">إغلاق</button>
+            <span class="cart-title">قائمة طلباتك الحالية 🛒</span>
+            <button onclick="toggleCart(false)" style="background:none; border:none; color:#888; cursor:pointer; font-size:1.2rem;">✕</button>
         </div>
         
-        <div class="cart-items-list" id="cartList"></div>
+        <div class="cart-items-list" id="cartList">
+            </div>
         
-        <div class="price-row">
-            <span>إجمالي المبلغ:</span>
-            <span class="total-price" id="cartTotal">0.00 ج.م</span>
+        <div class="final-price-row">
+            <span>إجمالي مبلغ الطلب:</span>
+            <span id="cartTotal">0.00 ج.م</span>
         </div>
 
         <div class="order-fields">
-            <input type="text" id="userName" placeholder="الاسم الكامل" required>
-            <input type="url" id="userLink" placeholder="رابط الحساب/المنشور" required>
+            <input type="text" id="userName" placeholder="اسمك الكامل (ثنائي على الأقل)" required>
+            <input type="url" id="userLink" placeholder="رابط الحساب أو المنشور المراد دعمه" required>
         </div>
         
-        <button class="btn-confirm" onclick="checkout()">إرسال الطلب للواتساب ✅</button>
+        <button class="btn-send" onclick="sendToWhatsApp()">
+            تأكيد وإرسال الطلب عبر واتساب
+        </button>
     </div>
 </div>
 
 <script>
+    // مصفوفة لتخزين عناصر السلة
     let cart = [];
-    const WHATSAPP_NUM = "201010876605"; // ضع رقمك هنا
+    // رقم الواتساب الخاص بك (تأكد من وضع مفتاح الدولة في البداية، مثال: 20 لمصر)
+    const WHATSAPP_NUMBER = "201012345678"; 
 
-    function calculate(id, ppo) {
-        const qty = document.getElementById('qty_' + id).value;
-        document.getElementById('prc_' + id).innerText = (qty * ppo).toFixed(2) + " ج.م";
+    // دالة لحساب السعر فورياً داخل بطاقة الخدمة
+    function calculate(id, pricePerOne) {
+        const qtyInput = document.getElementById('qty_' + id);
+        let qty = parseInt(qtyInput.value);
+        
+        // التأكد من أن العدد ليس أقل من الحد الأدنى
+        if (isNaN(qty) || qty < parseInt(qtyInput.min)) {
+            qty = parseInt(qtyInput.min);
+        }
+
+        const totalPrice = (qty * pricePerOne).toFixed(2);
+        document.getElementById('prc_' + id).innerText = totalPrice + " ج.م";
     }
 
+    // دالة لإظهار أو إخفاء السلة العائمة
     function toggleCart(show) {
-        document.getElementById('cartPanel').classList.toggle('active', show);
+        const panel = document.getElementById('cartPanel');
+        if (show) {
+            panel.classList.add('active');
+        } else {
+            panel.classList.remove('active');
+        }
     }
 
-    function addToCart(name, inputId, ppo) {
-        const qty = document.getElementById(inputId).value;
-        const price = (qty * ppo).toFixed(2);
-        cart.push({ name, qty, price });
+    // دالة لإضافة الخدمة مع العدد والسعر المحسوب إلى السلة
+    function addToCart(serviceName, inputId, pricePerOne) {
+        const qtyInput = document.getElementById(inputId);
+        const qty = parseInt(qtyInput.value);
+        
+        // التحقق من صحة العدد قبل الإضافة
+        if (isNaN(qty) || qty < parseInt(qtyInput.min)) {
+            alert("يرجى إدخال عدد صحيح ومناسب لهذه الخدمة.");
+            return;
+        }
+
+        const totalPrice = (qty * pricePerOne).toFixed(2);
+
+        // إضافة العنصر للمصفوفة
+        cart.push({
+            name: serviceName,
+            qty: qty,
+            price: totalPrice
+        });
+        
+        // تحديث عرض السلة وإظهارها
         renderCart();
         toggleCart(true);
     }
 
-    function addFree(name) {
-        cart.push({ name, qty: 'هدية', price: '0.00' });
-        renderCart();
-        toggleCart(true);
-    }
-
+    // دالة لتحديث واجهة السلة بناءً على المصفوفة
     function renderCart() {
         const list = document.getElementById('cartList');
         const totalDisp = document.getElementById('cartTotal');
-        list.innerHTML = "";
+        list.innerHTML = ""; // مسح القائمة الحالية
         let total = 0;
 
+        // بناء عناصر القائمة
         cart.forEach((item, index) => {
             total += parseFloat(item.price);
             list.innerHTML += `
                 <div class="cart-item">
-                    <span>${item.name} (${item.qty})</span>
-                    <span>${item.price} ج.م <button onclick="remove(${index})" style="background:none;border:none;color:red;cursor:pointer">✕</button></span>
+                    <span>${item.name} (العدد: ${item.qty})</span>
+                    <div style="display:flex; align-items:center;">
+                        <span style="font-weight:bold; color:var(--primary-orange);">${item.price} ج.م</span>
+                        <button class="remove-item" onclick="removeFromCart(${index})">✕</button>
+                    </div>
                 </div>`;
         });
+        
+        // تحديث الإجمالي النهائي في السلة
         totalDisp.innerText = total.toFixed(2) + " ج.م";
     }
 
-    function remove(index) {
-        cart.splice(index, 1);
-        if(cart.length === 0) toggleCart(false);
-        renderCart();
+    // دالة لحذف عنصر من السلة
+    function removeFromCart(index) {
+        cart.splice(index, 1); // حذف من المصفوفة
+        
+        // إذا أصبحت السلة فارغة، قم بإخفائها
+        if (cart.length === 0) {
+            toggleCart(false);
+        }
+        renderCart(); // إعادة بناء الواجهة
     }
 
-    function checkout() {
-        const name = document.getElementById('userName').value;
-        const link = document.getElementById('userLink').value;
+    // الدالة النهائية لإرسال الطلب عبر الواتساب
+    function sendToWhatsApp() {
+        const nameInput = document.getElementById('userName');
+        const linkInput = document.getElementById('userLink');
         
-        if(!name || !link) { alert("من فضلك أدخل الاسم والرابط"); return; }
+        const name = nameInput.value.trim();
+        const link = linkInput.value.trim();
+        
+        // التحقق من إدخال البيانات المطلوبة
+        if (!name || !link) {
+            alert("من فضلك، أدخل اسمك ورابط الحساب لإكمال الطلب.");
+            return;
+        }
 
-        let msg = `طلب جديد من الموقع 🚀%0A%0A`;
-        msg += `👤 العميل: ${name}%0A🔗 الرابط: ${link}%0A%0A📦 الطلبات:%0A`;
+        // بناء نص الرسالة للواتساب
+        let message = `طلب جديد من المتجر 🚀%0A%0A`;
+        message += `👤 *العميل:* ${name}%0A`;
+        message += `🔗 *الرابط:* ${link}%0A%0A`;
+        message += `📦 *الخدمات المطلوبة:*%0A`;
         
-        cart.forEach(item => {
-            msg += `- ${item.name} (${item.qty}) -> ${item.price} ج.م%0A`;
+        cart.forEach((item, index) => {
+            message += `${index + 1}. ${item.name} (العدد: ${item.qty}) -> *${item.price} ج.م*%0A`;
         });
         
-        msg += `%0A💰 الإجمالي: ${document.getElementById('cartTotal').innerText}`;
+        const totalAmount = document.getElementById('cartTotal').innerText;
+        message += `%0A💰 *الإجمالي النهائي:* *${totalAmount}*`;
         
-        window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
+        // فتح رابط الواتساب بالرسالة المجهزة
+        const whatsappUrl = `https://wa.me/${201010876605}?text=${message}`;
+        window.open(whatsappUrl, '_blank');
     }
 </script>
 
