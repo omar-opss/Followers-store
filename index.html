@@ -3,170 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Booster | متجر خدمات السوشيال ميديا</title>
+    <title>Social Booster | متجر الخدمات الذكي</title>
     <style>
-        :root { --primary: #2563eb; --accent: #25d366; --bg: #f8fafc; --text: #1e293b; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
-        header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 3rem 1rem; text-align: center; clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%); }
-        .container { max-width: 1100px; margin: -50px auto 50px; padding: 0 15px; }
+        :root { --primary: #2563eb; --accent: #25d366; --bg: #f8fafc; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-bottom: 120px; }
+        header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 25px; text-align: center; }
+        .container { max-width: 1000px; margin: auto; padding: 15px; }
         
-        .section-title { margin: 40px 0 20px; border-right: 5px solid #f59e0b; padding-right: 15px; font-size: 1.5rem; color: #1e3a8a; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .card h3 { margin-top: 0; color: #1e3a8a; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .service-card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
-        .service-card h3 { margin: 0; font-size: 1rem; color: var(--primary); min-height: 40px; }
-        .price { font-size: 1.2rem; font-weight: bold; color: #059669; display: block; margin: 8px 0; }
-        .badge { background: #dcfce7; color: #166534; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: bold; }
-        .free { background: #fef3c7; color: #92400e; }
-
-        .order-section { background: white; padding: 30px; border-radius: 20px; margin-top: 50px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border: 2px solid var(--accent); }
-        .order-section h2 { color: #128c7e; text-align: center; margin-top: 0; }
+        .calc-box { background: #f1f5f9; padding: 10px; border-radius: 8px; margin: 15px 0; }
+        label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #64748b; }
+        input[type="number"] { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 1rem; box-sizing: border-box; }
         
-        form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .full-width { grid-column: span 2; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+        .price-display { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-weight: bold; }
+        .total-price { color: #059669; font-size: 1.2rem; }
         
-        .btn-whatsapp { background: var(--accent); color: white; padding: 15px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; grid-column: span 2; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-whatsapp:hover { background: #128c7e; transform: scale(1.02); }
-
-        @media (max-width: 768px) { form { grid-template-columns: 1fr; } .full-width, .btn-whatsapp { grid-column: span 1; } }
+        .add-btn { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        
+        /* السلة العائمة */
+        .cart-panel { position: fixed; bottom: 0; left: 0; right: 0; background: white; box-shadow: 0 -5px 20px rgba(0,0,0,0.15); padding: 20px; z-index: 1000; display: none; border-top: 3px solid var(--accent); }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cart-items { max-height: 150px; overflow-y: auto; margin-bottom: 15px; font-size: 0.9rem; }
+        .cart-item { display: flex; justify-content: space-between; border-bottom: 1px dashed #eee; padding: 5px 0; }
+        
+        .order-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-send { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; grid-column: span 2; font-size: 1.1rem; }
+        
+        @media (max-width: 600px) { .order-form { grid-template-columns: 1fr; } .btn-send { grid-column: span 1; } }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Social Booster</h1>
-    <p>أسرع وأرخص خدمات السوشيال ميديا - تنفيذ فوري</p>
+    <p>حدد الكمية التي تريدها.. وسننفذ طلبك في الحال</p>
 </header>
 
 <div class="container">
-    
-    <h2 class="section-title">⭐ خدمات المتابعين والاشتراكات</h2>
     <div class="services-grid">
-        <div class="service-card">
-            <span class="badge">تيك توك</span>
-            <h3>10 متابعين ممتازة + ضمان</h3>
-            <span class="price">1.41 ج.م</span>
-        </div>
-        <div class="service-card">
-            <span class="badge">إنستجرام</span>
-            <h3>50 متابع (الأسرع + ضمان)</h3>
-            <span class="price">3.76 ج.م</span>
-        </div>
-        <div class="service-card">
-            <span class="badge">إنستجرام</span>
-            <h3>10 متابعين (حقيقي + ضمان)</h3>
-            <span class="price">3.29 ج.م</span>
-        </div>
-        <div class="service-card">
-            <span class="badge">تيليجرام</span>
-            <h3>10 مشتركين (قنوات وجروبات)</h3>
-            <span class="price">0.47 ج.م</span>
-        </div>
-    </div>
-
-    <h2 class="section-title">💬 التفاعل والتعليقات</h2>
-    <div class="services-grid">
-        <div class="service-card">
-            <span class="badge">إنستجرام</span>
-            <h3>10 تعليقات مخصصة</h3>
-            <span class="price">0.47 ج.م</span>
-        </div>
-        <div class="service-card">
-            <span class="badge">تيليجرام</span>
-            <h3>1 تفاعل إيجابي للمنشور</h3>
-            <span class="price">يبدأ من 0</span>
-        </div>
-    </div>
-
-    <h2 class="section-title">🎁 خدمات مجانية (0 جنيه)</h2>
-    <div class="services-grid">
-        <div class="service-card">
-            <span class="badge free">مجاني</span>
-            <h3>100 مشاهدة تيك توك</h3>
-            <span class="price">0.00 ج.م</span>
-        </div>
-        <div class="service-card">
-            <span class="badge free">مجاني</span>
-            <h3>10 لايكات (تيك توك/إنستا/فيسبوك)</h3>
-            <span class="price">0.00 ج.م</span>
-        </div>
-        <div class="service-card">
-            <span class="badge free">مجاني</span>
-            <h3>100 مشاهدة (إنستجرام/تويتر)</h3>
-            <span class="price">0.00 ج.م</span>
-        </div>
-        <div class="service-card">
-            <span class="badge free">مجاني</span>
-            <h3>50 مشاركة بث مباشر تيك توك</h3>
-            <span class="price">0.00 ج.م</span>
-        </div>
-    </div>
-
-    <div class="order-section" id="order">
-        <h2>اطلب خدمتك الآن</h2>
-        <p style="text-align: center; font-size: 0.9rem;">سيتم تحويلك للدردشة المباشرة لتأكيد الطلب والدفع</p>
         
-        <form onsubmit="sendOrder(event)">
-            <div>
-                <label>الاسم:</label>
-                <input type="text" id="cust_name" required placeholder="مثال: محمد علي">
+        <div class="card">
+            <h3>متابعين تيك توك (ضمان)</h3>
+            <p style="font-size: 0.8rem; color: #666;">سعر الـ 10 متابعين = 3.00 ج.م</p>
+            <div class="calc-box">
+                <label>أدخل عدد المتابعين (بالمضاعفات):</label>
+                <input type="number" id="qty_tiktok" value="10" step="10" min="10" oninput="updatePrice('tiktok', 0.30)">
             </div>
-            <div>
-                <label>رابط الحساب/المنشور:</label>
-                <input type="url" id="cust_link" required placeholder="ضع الرابط هنا">
+            <div class="price-display">
+                <span>السعر:</span>
+                <span class="total-price" id="prc_tiktok">3.00 ج.م</span>
             </div>
-            <div class="full-width">
-                <label>اختر الخدمة:</label>
-                <select id="cust_service" required>
-                    <option value="">-- اختر الخدمة من هنا --</option>
-                    <optgroup label="مدفوع">
-                        <option value="تيك توك 10 متابعين">10 متابعين تيك توك (1.41 ج.م)</option>
-                        <option value="إنستا 50 متابع سريع">50 متابع إنستا سريع (3.76 ج.م)</option>
-                        <option value="إنستا 10 حقيقي">10 متابعين إنستا حقيقي (3.29 ج.م)</option>
-                        <option value="تيليجرام 10 مشتركين">10 مشتركين تيليجرام (0.47 ج.م)</option>
-                        <option value="إنستا 10 تعليقات">10 تعليقات إنستا (0.47 ج.م)</option>
-                    </optgroup>
-                    <optgroup label="مجاني">
-                        <option value="مشاهدات تيك توك مجاني">100 مشاهدة تيك توك (مجاناً)</option>
-                        <option value="لايكات مجانية">10 لايكات تجربة (مجاناً)</option>
-                        <option value="مشاهدات منوعة مجاني">100 مشاهدة إنستا/تويتر (مجاناً)</option>
-                    </optgroup>
-                </select>
+            <button class="add-btn" onclick="addToCart('متابعين تيك توك', 'qty_tiktok', 0.30)">إضافة للطلبات</button>
+        </div>
+
+        <div class="card">
+            <h3>متابعين إنستجرام (الأسرع)</h3>
+            <p style="font-size: 0.8rem; color: #666;">سعر الـ 50 متابع = 7.50 ج.م</p>
+            <div class="calc-box">
+                <label>أدخل عدد المتابعين:</label>
+                <input type="number" id="qty_insta" value="50" step="50" min="50" oninput="updatePrice('insta', 0.15)">
             </div>
-            <button type="submit" class="btn-whatsapp">
-                إرسال الطلب عبر واتساب
-            </button>
-        </form>
+            <div class="price-display">
+                <span>السعر:</span>
+                <span class="total-price" id="prc_insta">7.50 ج.م</span>
+            </div>
+            <button class="add-btn" onclick="addToCart('متابعين إنستا سريع', 'qty_insta', 0.15)">إضافة للطلبات</button>
+        </div>
+
+        <div class="card">
+            <h3>مشتركين تيليجرام (قنوات)</h3>
+            <p style="font-size: 0.8rem; color: #666;">سعر الـ 10 مشتركين = 1.00 ج.م</p>
+            <div class="calc-box">
+                <label>أدخل عدد المشتركين:</label>
+                <input type="number" id="qty_tele" value="10" step="10" min="10" oninput="updatePrice('tele', 0.10)">
+            </div>
+            <div class="price-display">
+                <span>السعر:</span>
+                <span class="total-price" id="prc_tele">1.00 ج.م</span>
+            </div>
+            <button class="add-btn" onclick="addToCart('مشتركين تيليجرام', 'qty_tele', 0.10)">إضافة للطلبات</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+        <strong>سلة المشتريات 🛒</strong>
+        <span id="finalTotal" style="color:#059669; font-weight:bold;">0.00 ج.م</span>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="order-form">
+        <input type="text" id="custName" placeholder="اسمك الثنائي" required>
+        <input type="url" id="custLink" placeholder="رابط الحساب المراد دعمه" required>
+        <button class="btn-send" onclick="sendToWhatsApp()">إرسال الطلب عبر واتساب ✅</button>
     </div>
 </div>
 
 <script>
-function sendOrder(event) {
-    event.preventDefault();
-    
-    // --- ضع رقمك هنا مفتاح الدولة (مثال لمصر 20) ---
-    const myNumber = "201010876605"; 
-    
-    const name = document.getElementById('cust_name').value;
-    const link = document.getElementById('cust_link').value;
-    const service = document.getElementById('cust_service').value;
+    let cart = [];
+    const myWhatsApp = "201012345678"; // <--- ضع رقمك هنا
 
-    const message = `طلب جديد من الموقع 🚀%0A%0A` +
-                    `👤 العميل: ${name}%0A` +
-                    `🛠 الخدمة: ${service}%0A` +
-                    `🔗 الرابط: ${link}%0A%0A` +
-                    `متاح الآن للتنفيذ؟`;
+    // تحديث السعر تلقائياً عند تغيير الكمية
+    function updatePrice(id, pricePerOne) {
+        const qty = document.getElementById('qty_' + id).value;
+        const totalPrice = (qty * pricePerOne).toFixed(2);
+        document.getElementById('prc_' + id).innerText = totalPrice + " ج.م";
+    }
 
-    const whatsappUrl = `https://wa.me/${myNumber}?text=${message}`;
-    window.open(whatsappUrl, '_blank');
-}
+    function addToCart(serviceName, inputId, pricePerOne) {
+        const qty = parseInt(document.getElementById(inputId).value);
+        const totalPrice = (qty * pricePerOne).toFixed(2);
+
+        cart.push({ name: serviceName, qty: qty, price: totalPrice });
+        
+        renderCart();
+        document.getElementById('cartPanel').style.display = 'block';
+    }
+
+    function renderCart() {
+        const itemsDiv = document.getElementById('cartItems');
+        const finalTotal = document.getElementById('finalTotal');
+        itemsDiv.innerHTML = "";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            total += parseFloat(item.price);
+            itemsDiv.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name} (${item.qty} متابع)</span>
+                    <span>${item.price} ج.م <button onclick="remove(${index})" style="background:none; border:none; color:red; cursor:pointer;">X</button></span>
+                </div>`;
+        });
+        finalTotal.innerText = total.toFixed(2) + " ج.م";
+    }
+
+    function remove(index) {
+        cart.splice(index, 1);
+        if(cart.length === 0) document.getElementById('cartPanel').style.display = 'none';
+        renderCart();
+    }
+
+    function sendToWhatsApp() {
+        const name = document.getElementById('custName').value;
+        const link = document.getElementById('custLink').value;
+        if(!name || !link) { alert("أكمل البيانات أولاً"); return; }
+
+        let text = `طلب جديد من الموقع 🚀%0A%0A`;
+        text += `👤 العميل: ${name}%0A`;
+        text += `🔗 الرابط: ${link}%0A%0A`;
+        text += `📦 الخدمات:%0A`;
+        
+        cart.forEach(item => {
+            text += `- ${item.name} (العدد: ${item.qty}) السعر: ${item.price} ج.م%0A`;
+        });
+        
+        text += `%0A💰 الإجمالي: ${document.getElementById('finalTotal').innerText}`;
+        
+        window.open(`https://wa.me/${myWhatsApp}?text=${text}`, '_blank');
+    }
 </script>
-
-<footer style="text-align: center; padding: 30px; color: #666; font-size: 0.8rem;">
-    &copy; 2026 Social Booster - جميع الأسعار بالجنيه المصري
-</footer>
 
 </body>
 </html>
